@@ -40,6 +40,19 @@ app.post("/notes", (req, res) => {
   res.status(201).json({ message: "New note created.", note: newNote });
 });
 
+app.patch("/notes/:id", (req, res) => {
+    const note = notes.find((note) => note.id === Number(req.params.id));
+
+    if (!note) {
+        return res.status(404).json({ error: "Note not found" });
+      }
+
+    note.title = req.body.title;
+    note.content =req.body.content;
+
+    res.json(note);
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
